@@ -1,4 +1,4 @@
-name: Deploy Static Website with Pulumi
+name: Pulumi Deploy
 
 on:
   push:
@@ -14,10 +14,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout Repo
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -25,13 +25,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Pulumi Login (ESC)
-        run: pulumi login --cloud-url https://api.pulumi.com
+      # 🔥 The correct OIDC login for Pulumi ESC
+      - name: Pulumi Login (OIDC)
+        run: pulumi login
 
-      - name: Deploy infra
-        uses: pulumi/actions@v4
-        with:
-          command: up
-          stack-name: dev
-        env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+      - name: Pulumi Up
+        run: pulumi up --yes --stack dev
+
