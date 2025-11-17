@@ -27,6 +27,9 @@ jobs:
       - name: Pulumi Login
         run: pulumi login
 
+      - name: Select Pulumi Stack
+        run: pulumi stack select pulumi-static-website-dev
+
       - name: Pulumi Up
         run: pulumi up --yes
 
