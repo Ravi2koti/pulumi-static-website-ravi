@@ -1,0 +1,43 @@
+name: Pulumi Destroy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  destroy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Pulumi Login (OIDC)
+        uses: pulumi/actions@v4
+        with:
+          command: login
+          cloud-url: pulumi://ravi2koti-org
+
+      - name: Select Stack
+        uses: pulumi/actions@v4
+        with:
+          command: stack select
+          stack-name: pulumi-static-website/dev
+
+      - name: Destroy Resources
+        uses: pulumi/actions@v4
+        with:
+          command: destroy
+          stack-name: pulumi-static-website/dev
+          args: --yes
