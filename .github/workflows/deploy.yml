@@ -9,8 +9,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    env:
-      PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
       - name: Checkout Repo
@@ -19,17 +20,12 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: 18
 
       - name: Install dependencies
         run: npm install
 
-      - name: Pulumi Login
-        run: pulumi login
-
-      - name: Select Pulumi Stack
-        run: pulumi stack select pulumi-static-website-dev
-
-      - name: Pulumi Up
-        run: pulumi up --yes
-
+      - name: Pulumi Login (OIDC)
+        uses: pulumi/actions@v4
+        with:
+          command:
