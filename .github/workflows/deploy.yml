@@ -1,12 +1,10 @@
-name: Pulumi Deploy
+name: Pulumi Destroy
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
-  deploy:
+  destroy:
     runs-on: ubuntu-latest
 
     permissions:
@@ -28,4 +26,6 @@ jobs:
       - name: Pulumi Login (OIDC)
         uses: pulumi/actions@v4
         with:
-          command:
+          command: login
+          cloud-url
+
