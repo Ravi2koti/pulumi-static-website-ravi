@@ -1,3 +1,5 @@
+
+
 name: Pulumi Destroy
 
 on:
@@ -27,5 +29,17 @@ jobs:
         uses: pulumi/actions@v4
         with:
           command: login
-          cloud-url
+          cloud-url: pulumi://ravi2koti-org
 
+      - name: Select Stack
+        uses: pulumi/actions@v4
+        with:
+          command: stack select
+          stack-name: pulumi-static-website/dev
+
+      - name: Destroy Resources
+        uses: pulumi/actions@v4
+        with:
+          command: destroy
+          stack-name: pulumi-static-website/dev
+          args: --yes
