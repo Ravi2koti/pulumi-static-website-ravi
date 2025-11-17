@@ -1,0 +1,13 @@
+{
+  "name": "pulumi-static-website",
+  "main": "index.ts",
+  "dependencies": {
+    "@pulumi/aws": "^6.0.0",
+    "@pulumi/pulumi": "^3.100.0",
+    "@pulumi/awsx": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "typescript": "^5.0.0"
+  }
+}
